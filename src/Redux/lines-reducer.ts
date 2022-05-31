@@ -59,9 +59,9 @@ export const requesPblLines = (): ThunkType => {
     return async(dispatch) => {
         dispatch(actions.toggleIsFetching(true));
 
-        let data: any = await linesApi.getPblLines()
+        let data: any = await linesApi.getPblLines();
             dispatch(actions.toggleIsFetching(false));
-            dispatch(actions.setPblLines(data.items));
+            dispatch(actions.setPblLines(data.records));
     }
 }
 

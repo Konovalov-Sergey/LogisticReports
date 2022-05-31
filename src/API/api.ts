@@ -17,6 +17,6 @@ export const linesApi = {
 }
 
 export type GetPblLinesType = {
-    items: Array<RecordsType> 
+    records: RecordsType 
 }
 
