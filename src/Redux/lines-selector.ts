@@ -7,3 +7,7 @@ export const getPblLines = (state: AppStateType) => {
 export const getIsFetching = (state: AppStateType) => {
     return state.lines.isFetching
 };
+
+export const getPickLines = (state: AppStateType) => {
+    return state.lines.linesPickPHP
+}

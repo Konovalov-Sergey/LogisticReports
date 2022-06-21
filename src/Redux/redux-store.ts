@@ -1,9 +1,15 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import thunkMiddleware from "redux-thunk";
 import linesReducer from './lines-reducer';
+import volumeReducer from './volume-reducer';
+import reportInReducer from './reportIn-reducer';
+import reportOutReducer from "./reportOut-reducer";
 
 const rootReducer = combineReducers({
-    lines: linesReducer
+    lines: linesReducer,
+    volume: volumeReducer,
+    reportIn: reportInReducer,
+    reportOut: reportOutReducer
 })
 
 type RootReducerType = typeof rootReducer;
