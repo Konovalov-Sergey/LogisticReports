@@ -7,7 +7,9 @@ export type reportOutMonthType = {
     Заявка: string,
     Носії: string,
     Артикула: string,
-    Лінії: string
+    Лінії: string,
+    'Об\'єм': string,
+    Вага: string
 }
 
 export type reportOutOnOffMonthType = {
@@ -20,5 +22,7 @@ export type reportOutOnOffMonthType = {
     Заявка: string,
     Носії: string,
     Артикула: string,
-    Лінії: string
+    Лінії: string,
+    'Об\'єм': string,
+    Вага: string
 }

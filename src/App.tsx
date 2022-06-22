@@ -5,7 +5,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import HeaderContainer from './components/Header/Header';
 import Sidebar from './components/Sidebar/Sidebar';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, HashRouter, Route, Routes } from "react-router-dom";
 import { Provider } from 'react-redux';
 import store from './Redux/redux-store';
 import { LinePblPage } from './components/Lines/PBL/LinePblPage';
@@ -28,7 +28,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const App: React.FC = () => {
   return (
-    <Router>
+    <HashRouter basename={process.env.REACT_APP_BASE_URL}>
       <Provider store={store} >
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={1}>
@@ -69,7 +69,7 @@ const App: React.FC = () => {
           </Grid>
         </Box>
       </Provider>
-    </Router>
+    </HashRouter>
 
   );
 }

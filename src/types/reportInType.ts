@@ -5,7 +5,9 @@ export type reportInMonthType = {
     'Поставки': string,
     'Носії': string,
     'Артикула': string,
-    'Лінії': string
+    'Лінії': string,
+    'Об\'єм': string,
+    'Вага': string
 }
 export type reportInOnOffMonthType = {
     'Рік': string,
@@ -15,5 +17,7 @@ export type reportInOnOffMonthType = {
     'Поставки': string,
     'Носії': string,
     'Артикула': string,
-    'Лінії': string
+    'Лінії': string,
+    'Об\'єм': string,
+    'Вага': string
 }

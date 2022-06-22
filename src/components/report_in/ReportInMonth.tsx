@@ -9,8 +9,9 @@ import Paper from '@mui/material/Paper';
 import { Box } from '@mui/material';
 import { ReportInOutForm, ValuesType } from '../Common/form/ReportInOutForm';
 import { useSelector, useDispatch } from 'react-redux';
-import { getReportInMonth } from './../../Redux/reportIn-selector';
+import { getReportInMonth, getIsfetching } from './../../Redux/reportIn-selector';
 import { requestReportInMonth } from './../../Redux/reportIn-reducer';
+import Preloader from './../Common/Preloader/Preloader';
 
 
 
@@ -19,6 +20,7 @@ type PropsType = {}
 const ReportInMonth: React.FC<PropsType> = () => {
 
     const reportInMonth = useSelector(getReportInMonth);
+    const isFetching = useSelector(getIsfetching);
     const dispatch = useDispatch();
     let today = new Date();
     let time = `${today.getHours()}:${today.getMinutes()}`;
@@ -33,6 +35,7 @@ const ReportInMonth: React.FC<PropsType> = () => {
         <div>
             <h2>Кількість прийнятих поставок, носіїв, артикулів, ліній за період станом на {time} </h2>
             <ReportInOutForm handleSubmit={handleSubmit} />
+            {isFetching ? <Preloader /> : null }
             {reportInMonth.length > 0 &&
             <Box>
                 <TableContainer component={Paper}>
@@ -46,6 +49,8 @@ const ReportInMonth: React.FC<PropsType> = () => {
                                 <TableCell align="center">Носії</TableCell>
                                 <TableCell align="center">Артикула</TableCell>
                                 <TableCell align="center">Лінії</TableCell>
+                                <TableCell align="center">Об'єм</TableCell>
+                                <TableCell align="center">Вага</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -61,6 +66,8 @@ const ReportInMonth: React.FC<PropsType> = () => {
                                     <TableCell align="center">{row.Носії}</TableCell>
                                     <TableCell align="center">{row.Артикула}</TableCell>
                                     <TableCell align="center">{row.Лінії}</TableCell>
+                                    <TableCell align="center">{row['Об\'єм']}</TableCell>
+                                    <TableCell align="center">{row.Вага}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

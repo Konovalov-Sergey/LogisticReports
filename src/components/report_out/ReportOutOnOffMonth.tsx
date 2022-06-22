@@ -53,6 +53,8 @@ const ReportOutOnOffMonth: React.FC<PropsType> = () => {
                                 <TableCell align="center">Носії</TableCell>
                                 <TableCell align="center">Артикула</TableCell>
                                 <TableCell align="center">Лінії</TableCell>
+                                <TableCell align="center">Об'єм</TableCell>
+                                <TableCell align="center">Вага</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -71,6 +73,8 @@ const ReportOutOnOffMonth: React.FC<PropsType> = () => {
                                     <TableCell align="center">{row.Носії}</TableCell>
                                     <TableCell align="center">{row.Артикула}</TableCell>
                                     <TableCell align="center">{row.Лінії}</TableCell>
+                                    <TableCell align="center">{row['Об\'єм']}</TableCell>
+                                    <TableCell align="center">{row.Вага}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
