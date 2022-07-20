@@ -7,8 +7,14 @@ export const getIsfetching = (state: AppStateType) => {
 export const getReportInMonth = (state: AppStateType) => {
     return state.reportIn.reportInMonth
 }
+export const getReportInDay = (state: AppStateType) => {
+    return state.reportIn.reportInDay
+}
 export const getReportInOnOffMonth = (state: AppStateType) => {
     return state.reportIn.reportInOnOffMonth
+}
+export const getReportInOnOffDay = (state: AppStateType) => {
+    return state.reportIn.reportInOnOffDay
 }
 export const getWhName = (state: AppStateType) => {
     return state.reportIn.whName

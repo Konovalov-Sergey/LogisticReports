@@ -9,18 +9,18 @@ import Paper from '@mui/material/Paper';
 import { Box } from '@mui/material';
 import { ReportInOutForm, ValuesType } from '../Common/form/ReportInOutForm';
 import { useSelector, useDispatch } from 'react-redux';
-import { getReportOutOnOffMonth } from '../../Redux/reportOut-selector';
-import { requestReportOutOnOffMonth } from '../../Redux/reportOut-reducer';
-import { getIsfetching } from './../../Redux/reportOut-selector';
+import { getIsfetching, getReportInDay } from './../../Redux/reportIn-selector';
+import { requestReportInDay } from './../../Redux/reportIn-reducer';
 import Preloader from './../Common/Preloader/Preloader';
+import ReportInNote from '../Common/notes/reportInNote';
 
 
 
 type PropsType = {}
 
-const ReportOutOnOffMonth: React.FC<PropsType> = () => {
+const ReportInDay: React.FC<PropsType> = () => {
 
-    const reportOutOnOffMonth = useSelector(getReportOutOnOffMonth);
+    const reportInDay = useSelector(getReportInDay);
     const isFetching = useSelector(getIsfetching);
     const dispatch = useDispatch();
     let today = new Date();
@@ -29,27 +29,23 @@ const ReportOutOnOffMonth: React.FC<PropsType> = () => {
     const handleSubmit = (values: ValuesType) => {
         let dateFrom = `${values.dateFrom.getDate()}.${values.dateFrom.getMonth() + 1}.${values.dateFrom.getFullYear()}`
         let dateTo = `${values.dateTo.getDate()}.${values.dateTo.getMonth() + 1}.${values.dateTo.getFullYear()}`
-        dispatch<any>(requestReportOutOnOffMonth(values.wh, dateFrom, dateTo))
+        dispatch<any>(requestReportInDay(values.wh, dateFrom, dateTo))
     }
 
     return (
         <div>
-            <h2>Кількість відвантажених відправок, носіїв, артикулів, ліній помісячно у розрізі потоків (онлайн, офлайн) станом на {time} </h2>
+            <h2>Кількість прийнятих поставок, носіїв, артикулів, ліній поденно станом на {time} </h2>
             <ReportInOutForm handleSubmit={handleSubmit} />
             {isFetching ? <Preloader /> : null }
-            {reportOutOnOffMonth.length > 0 &&
-            <Box>
-                <TableContainer component={Paper}>
-                    <Table sx={{ maxWidth: 450 }} size="small" aria-label="a dense table">
+            {reportInDay.length > 0 &&
+            <Box sx={{textAlign: 'left'}}>
+                <TableContainer component={Paper} sx={{marginBottom: '25px'}}>
+                    <Table sx={{ maxWidth: 650 }} size="small" aria-label="a dense table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>Рік</TableCell>
-                                <TableCell align="center">Місяць</TableCell>
+                                <TableCell>Дата</TableCell>
                                 <TableCell align="center">Склад</TableCell>
-                                <TableCell align="center">Онлайн_офлайн</TableCell>
-                                <TableCell align="center">Рейси</TableCell>
-                                <TableCell align="center">Відправки</TableCell>
-                                <TableCell align="center">Заявки</TableCell>
+                                <TableCell align="center">Поставки</TableCell>
                                 <TableCell align="center">Носії</TableCell>
                                 <TableCell align="center">Артикула</TableCell>
                                 <TableCell align="center">Лінії</TableCell>
@@ -58,18 +54,14 @@ const ReportOutOnOffMonth: React.FC<PropsType> = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {reportOutOnOffMonth.map((row, index) => (
+                            {reportInDay.map((row, index) => (
                                 <TableRow
                                     key={index}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
-                                    <TableCell align="center"> {row.Рік}</TableCell>
-                                    <TableCell align="center">{row.Місяць}</TableCell>
+                                    <TableCell align="center"> {row.Дата}</TableCell>
                                     <TableCell align="center">{row.Склад}</TableCell>
-                                    <TableCell align="center">{row.Онлайн_офлайн}</TableCell>
-                                    <TableCell align="center">{row.Рейс}</TableCell>
-                                    <TableCell align="center">{row.Відправка}</TableCell>
-                                    <TableCell align="center">{row.Заявка}</TableCell>
+                                    <TableCell align="center">{row.Поставки}</TableCell>
                                     <TableCell align="center">{row.Носії}</TableCell>
                                     <TableCell align="center">{row.Артикула}</TableCell>
                                     <TableCell align="center">{row.Лінії}</TableCell>
@@ -80,10 +72,11 @@ const ReportOutOnOffMonth: React.FC<PropsType> = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-            </Box>
+                <ReportInNote />
+            </Box>            
             }
         </div>
     );
 };
 
-export default ReportOutOnOffMonth;
+export default ReportInDay;

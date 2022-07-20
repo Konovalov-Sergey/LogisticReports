@@ -11,7 +11,7 @@ import { ReportInOutForm, ValuesType } from '../Common/form/ReportInOutForm';
 import { useSelector, useDispatch } from 'react-redux';
 import { getReportOutMonth } from '../../Redux/reportOut-selector';
 import { requestReportOutMonth } from '../../Redux/reportOut-reducer';
-import { getIsfetching } from './../../Redux/reportIn-selector';
+import { getIsfetching } from './../../Redux/reportOut-selector';
 import Preloader from './../Common/Preloader/Preloader';
 
 
@@ -46,9 +46,9 @@ const ReportOutMonth: React.FC<PropsType> = () => {
                                 <TableCell>Рік</TableCell>
                                 <TableCell align="center">Місяць</TableCell>
                                 <TableCell align="center">Склад</TableCell>
-                                <TableCell align="center">Рейс</TableCell>
-                                <TableCell align="center">Відправка</TableCell>
-                                <TableCell align="center">Заявка</TableCell>
+                                <TableCell align="center">Рейси</TableCell>
+                                <TableCell align="center">Відправки</TableCell>
+                                <TableCell align="center">Заявки</TableCell>
                                 <TableCell align="center">Носії</TableCell>
                                 <TableCell align="center">Артикула</TableCell>
                                 <TableCell align="center">Лінії</TableCell>

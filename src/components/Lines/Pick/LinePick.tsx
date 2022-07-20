@@ -2,7 +2,7 @@ import React from "react";
 
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
-import { LinesPickPHPType } from "../../../types/type";
+import { LinesPickPHPType } from "../../../types/linesType";
 
 type PropsType = {
     line: LinesPickPHPType

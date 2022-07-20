@@ -52,4 +52,16 @@ export type VolumeWhArrType = {
     'Місяць': string,
     'Склад': string,
     'Об\'єм': string
+};
+
+export type PickedLinesPblType = {
+    'Дата закриття': string,
+    A: string,
+    B: string,
+    C: string,
+    C_conveyor: string,
+    C_depacking: string,
+    F: string,
+    G: string
 }
+

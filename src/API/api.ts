@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LinesPickPHPType, RecordsType } from "../types/type";
+import { LinesPickPHPType, PickedLinesPblType, RecordsType } from "../types/linesType";
 
 
 export const instance = axios.create({
@@ -12,17 +12,24 @@ export const linesApi = {
         .then(res => res.data);
     },
     getPickLines() {
-        return instance.get(`get_pick_lines.php`)
+        return instance.get<GetPickLinesType>(`get_pick_lines.php`)
+        .then(res => res.data);
+    },
+    getPickedLinesPbl(dateFrom: string, dateTo: string) {
+        return instance.get<GetPickedLinesPblType>(`picked_lines_pbl.php?dateFrom=${dateFrom}&dateTo=${dateTo}`)
         .then(res => res.data);
     },
     
 }
 
 export type GetPblLinesType = {
-    records: RecordsType 
+    records: RecordsType
 }
 
 export type GetPickLinesType = {
-    linesPickPHP: LinesPickPHPType 
+    linesPickPHP: LinesPickPHPType
+}
+export type GetPickedLinesPblType = {
+    pickedLinesPbl: PickedLinesPblType
 }
 

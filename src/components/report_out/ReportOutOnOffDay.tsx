@@ -9,8 +9,8 @@ import Paper from '@mui/material/Paper';
 import { Box } from '@mui/material';
 import { ReportInOutForm, ValuesType } from '../Common/form/ReportInOutForm';
 import { useSelector, useDispatch } from 'react-redux';
-import { getReportOutOnOffMonth } from '../../Redux/reportOut-selector';
-import { requestReportOutOnOffMonth } from '../../Redux/reportOut-reducer';
+import { getReportOutOnOffDay, getReportOutOnOffMonth } from '../../Redux/reportOut-selector';
+import { requestReportOutOnOffDay, requestReportOutOnOffMonth } from '../../Redux/reportOut-reducer';
 import { getIsfetching } from './../../Redux/reportOut-selector';
 import Preloader from './../Common/Preloader/Preloader';
 
@@ -18,9 +18,9 @@ import Preloader from './../Common/Preloader/Preloader';
 
 type PropsType = {}
 
-const ReportOutOnOffMonth: React.FC<PropsType> = () => {
+const ReportOutOnOffDay: React.FC<PropsType> = () => {
 
-    const reportOutOnOffMonth = useSelector(getReportOutOnOffMonth);
+    const reportOutOnOffDay = useSelector(getReportOutOnOffDay);
     const isFetching = useSelector(getIsfetching);
     const dispatch = useDispatch();
     let today = new Date();
@@ -29,7 +29,7 @@ const ReportOutOnOffMonth: React.FC<PropsType> = () => {
     const handleSubmit = (values: ValuesType) => {
         let dateFrom = `${values.dateFrom.getDate()}.${values.dateFrom.getMonth() + 1}.${values.dateFrom.getFullYear()}`
         let dateTo = `${values.dateTo.getDate()}.${values.dateTo.getMonth() + 1}.${values.dateTo.getFullYear()}`
-        dispatch<any>(requestReportOutOnOffMonth(values.wh, dateFrom, dateTo))
+        dispatch<any>(requestReportOutOnOffDay(values.wh, dateFrom, dateTo))
     }
 
     return (
@@ -37,14 +37,13 @@ const ReportOutOnOffMonth: React.FC<PropsType> = () => {
             <h2>Кількість відвантажених відправок, носіїв, артикулів, ліній помісячно у розрізі потоків (онлайн, офлайн) станом на {time} </h2>
             <ReportInOutForm handleSubmit={handleSubmit} />
             {isFetching ? <Preloader /> : null }
-            {reportOutOnOffMonth.length > 0 &&
+            {reportOutOnOffDay.length > 0 &&
             <Box>
                 <TableContainer component={Paper}>
                     <Table sx={{ maxWidth: 450 }} size="small" aria-label="a dense table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>Рік</TableCell>
-                                <TableCell align="center">Місяць</TableCell>
+                                <TableCell align="center">Дата</TableCell>
                                 <TableCell align="center">Склад</TableCell>
                                 <TableCell align="center">Онлайн_офлайн</TableCell>
                                 <TableCell align="center">Рейси</TableCell>
@@ -58,13 +57,12 @@ const ReportOutOnOffMonth: React.FC<PropsType> = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {reportOutOnOffMonth.map((row, index) => (
+                            {reportOutOnOffDay.map((row, index) => (
                                 <TableRow
                                     key={index}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
-                                    <TableCell align="center"> {row.Рік}</TableCell>
-                                    <TableCell align="center">{row.Місяць}</TableCell>
+                                    <TableCell align="center">{row.Дата}</TableCell>
                                     <TableCell align="center">{row.Склад}</TableCell>
                                     <TableCell align="center">{row.Онлайн_офлайн}</TableCell>
                                     <TableCell align="center">{row.Рейс}</TableCell>
@@ -86,4 +84,4 @@ const ReportOutOnOffMonth: React.FC<PropsType> = () => {
     );
 };
 
-export default ReportOutOnOffMonth;
+export default ReportOutOnOffDay;
