@@ -1,11 +1,11 @@
-import React from 'react';
-import { Box } from '@mui/material';
+import React, { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getIsfetching, getReportInDay } from './../../Redux/reportIn-selector';
-import { requestReportInDay } from './../../Redux/reportIn-reducer';
-import Preloader from './../Common/Preloader/Preloader';
+import { getUnPickedLinesSupPbl, getIsFetchingSupPBl } from './../../../Redux/lines-selector';
+import Preloader from './../../Common/Preloader/Preloader';
+import { requestUnpickedLinesSupPbl } from '../../../Redux/lines-reducer';
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 import { v4 as uuidv4 } from 'uuid';
+import { Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -17,28 +17,26 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import * as XLSX from 'xlsx';
 
-
 type PropsType = {}
 
-const ReportInDay: React.FC<PropsType> = () => {
+const UnpickedLinesSupPbl: React.FC<PropsType> = memo(() => {
 
-    const reportInDay = useSelector(getReportInDay);
-    const isFetching = useSelector(getIsfetching);
+    const unpickedLinesSupPbl = useSelector(getUnPickedLinesSupPbl);
+    const іsFetchingSupPbl = useSelector(getIsFetchingSupPBl);
     const dispatch = useDispatch();
     let today = new Date();
-    let yesterday = new Date();
-    yesterday.setDate(today.getDate() - 1)
     let time = `${today.getHours()}:${today.getMinutes()}`;
 
-    const [startDate, setStartDate] = React.useState<Date | null>(yesterday);
-    const [endDate, setEndDate] = React.useState<Date | null>(yesterday);
+    const [startDate, setStartDate] = React.useState<Date | null>(today);
+    const [endDate, setEndDate] = React.useState<Date | null>(today);
     const [warehouse, setWarehouse] = React.useState('all');
+
 
     const handleChange = (event: SelectChangeEvent) => {
         setWarehouse(event.target.value as string);
     };
 
-    const handleClick = (warehouse: string, startDate: Date | null, endDate: Date | null) => {
+    const handleClick = (startDate: Date | null, endDate: Date | null, warehouse: string) => {
         let dateFrom
         let dateTo
         startDate === null
@@ -47,39 +45,33 @@ const ReportInDay: React.FC<PropsType> = () => {
         endDate === null
             ? dateTo = ''
             : dateTo = `${endDate.getDate()}.${endDate.getMonth() + 1}.${endDate.getFullYear()}`
-        dispatch<any>(requestReportInDay(warehouse, dateFrom, dateTo ))
+            dispatch<any>(requestUnpickedLinesSupPbl(dateFrom, dateTo, warehouse))
     }
 
-    const rows: GridRowsProp = reportInDay.map(line => {
+    const rows: GridRowsProp = unpickedLinesSupPbl.map(line => {
         return { ...line, id: uuidv4() }
     });
 
     const columns: GridColDef[] = [
-        { field: 'Дата', headerName: 'Дата', width: 100 },
+        { field: 'Дата створення', headerName: 'Дата', width: 100 },
         { field: 'Склад', headerName: 'Склад', width: 70 },
-        { field: 'Поставки', headerName: 'Поставки', width: 100 },
-        { field: 'Носії', headerName: 'Носії', width: 70 },
-        { field: 'Артикула', headerName: 'Артикула', width: 90 },
+        { field: 'Постачальник', headerName: 'Постачальник', width: 300 },
         { field: 'Лінії', headerName: 'Лінії', width: 70 },
-        { field: 'Об\'єм', headerName: 'Об\'єм', width: 90 },
-        { field: 'Вага', headerName: 'Вага', width: 90 }        
     ];
 
     const downloadExcel = () => {
-        const workSheet = XLSX.utils.json_to_sheet(reportInDay)
+        const workSheet = XLSX.utils.json_to_sheet(unpickedLinesSupPbl)
         const workBook = XLSX.utils.book_new()
-        XLSX.utils.book_append_sheet(workBook, workSheet, "reportInDay")
-        //Buffer
-        //let buf = XLSX.write(workBook, { bookType: "xlsx", type: "buffer" })
-        //Binary string
+        XLSX.utils.book_append_sheet(workBook, workSheet, "unpickedLinesSupPbl")
         XLSX.write(workBook, { bookType: "xlsx", type: "binary" })
         //Download
-        XLSX.writeFile(workBook, "reportInDayData.xlsx")
+        XLSX.writeFile(workBook, "unpickedLinesSupPbl.xlsx")
     }
 
     return (
         <div>
-            <h2>Кількість прийнятих поставок, носіїв, артикулів, ліній поденно станом на {time} </h2>
+            <h2>Кількість нерозділених ліній Break-bulk у розрізі постачальників станом на {time} </h2>
+            {/* <ReportInOutForm handleSubmit={handleSubmit} /> */}
             <Box sx={{ minWidth: 120 }}>
                 <FormControl /*fullWidth*/>
                     <InputLabel id="warehouse">Склад</InputLabel>
@@ -121,9 +113,9 @@ const ReportInDay: React.FC<PropsType> = () => {
                         }}
                         renderInput={(params) => <TextField {...params} />}
                     />
-                    <Button variant="contained"
-                        sx={{ height: '55px' }}
-                        onClick={() => { handleClick(warehouse, startDate, endDate) }}>
+                    <Button variant="contained" 
+                            sx={{height: '55px'}}
+                            onClick={() => { handleClick(startDate, endDate, warehouse) }}>
                         Submit
                     </Button>
                     <Button variant="text"
@@ -134,18 +126,22 @@ const ReportInDay: React.FC<PropsType> = () => {
                     </Button>
                 </LocalizationProvider>
             </Box>
-            {isFetching ? <Preloader /> : null}
+            {іsFetchingSupPbl ? <Preloader /> : null}
 
-            {reportInDay.length > 0 &&
+            {unpickedLinesSupPbl.length > 0 &&
 
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <div style={{ height: 500, width: '50%', marginTop: '20px' }}>
+                    <div style={{ height: 500, width: '50%', marginTop: '20px'}}>
                         <DataGrid rows={rows} columns={columns} density='compact' />
                     </div>
                 </Box>
             }
+
         </div>
     );
-};
+});
 
-export default ReportInDay;
+export default UnpickedLinesSupPbl;
+
+
+

@@ -1,6 +1,4 @@
 
-import AdapterDateFns from '@mui/lab/AdapterDateFns'; // Depending on the library you picked
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import Button from '@mui/material/Button';
 import LinearProgress from '@mui/material/LinearProgress';
 import { Formik, Form, Field } from 'formik';
@@ -8,6 +6,10 @@ import { DatePicker } from 'formik-mui-lab';
 import { Select } from 'formik-mui';
 import * as React from 'react';
 import { MenuItem } from '@mui/material';
+import { LocalizationProvider } from '@mui/lab';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+
+
 
 export type ValuesType = {
     wh: string,
@@ -54,6 +56,7 @@ export const ReportInOutForm: React.FC<PropsType> = ({handleSubmit}) => {
                             <MenuItem value={4}>G</MenuItem>
                             <MenuItem value={'all'}>Всі</MenuItem>
                         </Field>
+                        
                         <Field
                             component={DatePicker}
                             //views={['month', 'year']}
@@ -61,7 +64,8 @@ export const ReportInOutForm: React.FC<PropsType> = ({handleSubmit}) => {
                             label="Дата від..."
                             //textField={{ helperText: 'Helper text', variant: 'filled' }}
                             inputFormat="dd/MM/yyyy"
-                        />    
+                        />   
+                         
                         <Field
                             component={DatePicker}
                             //views={['month', 'year']}
@@ -70,7 +74,7 @@ export const ReportInOutForm: React.FC<PropsType> = ({handleSubmit}) => {
                             //textField={{ helperText: 'Helper text', variant: 'filled' }}
                             inputFormat="dd/MM/yyyy"
                         />             
-
+                       
                         <br />
                         {isSubmitting && <LinearProgress />}
                         <br />
@@ -85,6 +89,6 @@ export const ReportInOutForm: React.FC<PropsType> = ({handleSubmit}) => {
                     </Form>
                 )}
             </Formik>
-        </LocalizationProvider>
+       </LocalizationProvider>
     );
 }

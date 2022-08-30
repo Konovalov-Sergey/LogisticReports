@@ -5,10 +5,9 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import HeaderContainer from './components/Header/Header';
 import Sidebar from './components/Sidebar/Sidebar';
-import { BrowserRouter as Router, HashRouter, Route, Routes } from "react-router-dom";
+import { /*BrowserRouter as Router,*/ HashRouter, Route, Routes } from "react-router-dom";
 import { Provider } from 'react-redux';
 import store from './Redux/redux-store';
-import { LinePickPage } from './components/Lines/Pick/LinePickPage';
 import ReportInMonth from './components/report_in/ReportInMonth';
 import ReportOutMonth from './components/report_out/ReportOutMonth';
 import ReportOutOnOffMonth from './components/report_out/ReportOutOnOffMonth';
@@ -18,6 +17,12 @@ import ReportOutDay from './components/report_out/ReportOutDay';
 import ReportInOnOffDay from './components/report_in/ReportInOnOffDay';
 import ReportOutOnOffDay from './components/report_out/ReportOutOnOffDay';
 import PickedLinesPbl from './components/Lines/PBL/PickedLinesPbl';
+import UnpickedLinesDetailingPbl from './components/Lines/PBL/UnpickedLinesDetailingPbl';
+import Inventory from './components/Inventory/Inventory';
+import ReportInFlow from './components/report_in/flow/ReportInFlow';
+import ReportOutFLow from './components/report_out/typeFlow/ReportOutFLow';
+import PickingPage from './components/Lines/Pick/PickingPage';
+
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -32,6 +37,7 @@ const App: React.FC = () => {
   return (
     <HashRouter basename={process.env.REACT_APP_BASE_URL}>
       <Provider store={store} >
+
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
@@ -49,8 +55,10 @@ const App: React.FC = () => {
                 <Routes>
                   <Route /*exact*/ path='/PickedLines/PBL'
                     element={<PickedLinesPbl />} />
-                  <Route /*exact*/ path='/Lines/Pick'
-                    element={<LinePickPage />} />
+                  <Route /*exact*/ path='/UnpickedLinesDetailing/PBL'
+                    element={<UnpickedLinesDetailingPbl />} />
+                  <Route /*exact*/ path='/Lines/Picking'
+                    element={<PickingPage />} />
                   <Route /*exact*/ path='/ReportIn/ReportInMonth'
                     element={<ReportInMonth />} />
                   <Route /*exact*/ path='/ReportIn/ReportInDay'
@@ -59,6 +67,8 @@ const App: React.FC = () => {
                     element={<ReportInOnOffMonth />} />
                   <Route /*exact*/ path='/ReportIn/ReportInOnOffDay'
                     element={<ReportInOnOffDay />} />
+                  <Route /*exact*/ path='/ReportIn/ReportInFlow'
+                    element={<ReportInFlow />} />
                   <Route /*exact*/ path='/ReportOut/ReportOutMonth'
                     element={<ReportOutMonth />} />
                   <Route /*exact*/ path='/ReportOut/ReportOutDay'
@@ -67,13 +77,18 @@ const App: React.FC = () => {
                     element={<ReportOutOnOffMonth />} />
                   <Route /*exact*/ path='/ReportOut/ReportOutOnOffDay'
                     element={<ReportOutOnOffDay />} />
+                  <Route /*exact*/ path='/ReportOut/ReportOutFlow'
+                    element={<ReportOutFLow />} />
+                  <Route /*exact*/ path='/inventory/get_inventory'
+                    element={<Inventory />} />
                   <Route /*exact*/ path='/'
-                    element={< ReportInDay/>} />
+                    element={< ReportInDay />} />
                 </Routes>
               </Item>
             </Grid>
           </Grid>
         </Box>
+
       </Provider>
     </HashRouter>
 

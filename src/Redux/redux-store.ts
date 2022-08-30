@@ -1,5 +1,6 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import thunkMiddleware from "redux-thunk";
+import inventoryReducer from "./inventory-reducer";
 import linesReducer from './lines-reducer';
 import reportInReducer from './reportIn-reducer';
 import reportOutReducer from "./reportOut-reducer";
@@ -7,7 +8,8 @@ import reportOutReducer from "./reportOut-reducer";
 const rootReducer = combineReducers({
     lines: linesReducer,
     reportIn: reportInReducer,
-    reportOut: reportOutReducer
+    reportOut: reportOutReducer,
+    inventory: inventoryReducer
 })
 
 type RootReducerType = typeof rootReducer;

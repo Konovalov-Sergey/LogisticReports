@@ -12,6 +12,12 @@ export const getReportOutOnOffMonth = (state: AppStateType) => {
 export const getReportOutOnOffDay = (state: AppStateType) => {
     return state.reportOut.reportOutOnOffDay
 }
+export const getReportOutFlow = (state: AppStateType) => {
+    return state.reportOut.reportOutFlow
+}
+export const getReportOutFlowDet = (state: AppStateType) => {
+    return state.reportOut.reportOutFlowDet
+}
 export const getWhName = (state: AppStateType) => {
     return state.reportOut.whName
 }
@@ -23,4 +29,7 @@ export const getDateTo = (state: AppStateType) => {
 }
 export const getIsfetching = (state: AppStateType) => {
     return state.reportOut.isFetching
+}
+export const getIsfetchingFlowDet = (state: AppStateType) => {
+    return state.reportOut.isFetchingFlowDet
 }
